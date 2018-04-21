@@ -1,6 +1,5 @@
 #include "vector.h"
 #include <cstring>
-#
 template<class T>
 int Vector<T>::size()
 {
@@ -37,7 +36,7 @@ template<class T>
 T & Vector<T>::operator [](int x)
 {
     T *aux=new T;
-    if(x<_capacity)
+    if(x<_capacity && x<_size)
         return vector[x];
     return *aux;
 }
@@ -152,6 +151,16 @@ Vector<T> Vector<T>::operator %(int x){
     aux._size=_size;
     for(int i=0;i<_size;i++)
         aux[i]=vector[i]%x;
+    return aux;
+}
+template <class T>
+Vector<T> Vector<T>::operator *(int x){
+    Vector<T>aux(_size+1);
+    if(x==0)
+        return (*this);
+    aux._size=_size;
+    for(int i=0;i<_size;i++)
+        aux[i]=vector[i]*x;
     return aux;
 }
 template<class T>

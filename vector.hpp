@@ -15,6 +15,7 @@ Vector<T>::Vector()
 {
     _size=0;
     _capacity=0;
+    vector=new T[1];
 }
 template<class T>
 Vector<T>::Vector(int __capacity)
@@ -38,7 +39,7 @@ T & Vector<T>::operator [](int x)
     T *aux=new T;
     if(x<_capacity && x<_size)
         return vector[x];
-    return *aux;
+    return aux;
 }
 template<class T>
 void Vector<T>::reserve(int x)

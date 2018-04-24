@@ -10,7 +10,7 @@ int main(){
 	for(auto it=v.begin();it!=v.end();it++)
         std::cout<<*it<<" ";
     std::cout<<'\n';
-    for(Vector<int>::iterator it=v.begin();it!=v.end();it++)
+    for(Vector<int>::iterator it=v.begin();it!=v.end();++it)
         std::cout<<*it<<" ";
     std::cout<<'\n';
 }

@@ -36,7 +36,6 @@ void Vector<T>:: push_back(T x)
 template<class T>
 T & Vector<T>::operator [](int x)
 {
-    T *aux=new T;
     if(x<_capacity && x<_size)
         return vector[x];
     return vector[0];

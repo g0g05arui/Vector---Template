@@ -83,13 +83,13 @@ void Vector<T>::pop_back()
     _size--;
 }
 template<class T>
-T* Vector<T>::begin(){
-    return &vector[0];
-}
+typename Vector<T>::iterator Vector<T>::begin(){
+    return (iterator){&vector[0]};
+ }
 template <class T>
-T* Vector<T>::end(){
-    return &vector[_size];
-}
+typename Vector<T>::iterator  Vector<T>::end(){
+ return (iterator){&vector[size()-1]+1};
+ }
 
 template <class T>
 T& Vector<T>::front(){
@@ -174,4 +174,32 @@ void operator << (std::ofstream & out,Vector<T> v){
     for(int i=0;i<v.size();i++)
         out<<v[i],out<<' ';
     out<<'\n';
+}
+
+template<class T>
+T & Vector<T>::iterator::operator *(){
+    return *x;
+}
+template<class T>
+void Vector<T>::iterator::operator =(const Vector<T>::iterator & it){
+    x=it.x;
+}
+
+template<class T>
+bool Vector<T>::iterator::operator !=(const Vector<T>::iterator & it){
+    return (x!=it.x);
+}
+
+template<class T>
+void Vector<T>::iterator::operator ++ ( int ){
+    x++;
+}
+
+template<class T>
+Vector<T>::iterator::iterator(const T * aux){
+    x=(T*)aux;
+}
+template<class T>
+Vector<T>::iterator::iterator(){
+    x=0;
 }

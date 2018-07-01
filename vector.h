@@ -8,6 +8,8 @@ class Vector{
 		T *vector;///Vector
 		int _size,_capacity;///Current size and capacity
 	public:
+	    class iterator;
+        const bool container=true;
 		int size();///Returns the size of the vector
 		int capacity();///Returns the capacity of the vector
 		Vector();///Basic construct
@@ -15,8 +17,10 @@ class Vector{
 		void push_back(T x);///Adds x to the end of the vector
 		T &operator [](int x);///The x-th element of the vector
 		void reserve(int x);///Reserves x more elemnts
-		void insert(T x,int pos);///Inserts on pozition pos the element X
+		void insert(int pos,T x);///Inserts on pozition pos the element X
 		void erase(int x);///Erases the x-th element of the vector
+		void erase (iterator it);
+		void insert (iterator,T);
 		void pop_back();///Erases the last element of the vector
 		void pop_front();///Erases the first element
 		void clear();///Clears the vectors
@@ -40,9 +44,19 @@ class Vector{
                 bool operator !=(const iterator &);///....(self-exp)
                 iterator(const T*);///constructor to a pointer
                 iterator();///NULL constructor
+                using Type=T;
+                operator T*();
         };
+        using Type=T;///TypeOfElements
         iterator begin();///First position
 		iterator end();///Last position
+		/// Operators
+		bool operator ==(const Vector<T>);
+		bool operator = (const Vector<T>);
+		bool operator > (const Vector<T>);
+		bool operator < (const Vector<T>);
+		bool operator >= (const Vector<T>);
+		bool operator <= (const Vector<T>);
 };
 template <class T>
 void operator <<(std::ofstream & out,Vector<T> v);///Outputs the vector v to the ofstream out;

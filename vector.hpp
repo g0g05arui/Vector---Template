@@ -52,7 +52,7 @@ void Vector<T>::reserve(int x)
     vector=aux;
 }
 template<class T>
-void Vector<T>::insert(T x,int pos)
+void Vector<T>::insert(int pos,T x)
 {
     if(_size==_capacity)
         reserve(_capacity);
@@ -202,4 +202,69 @@ Vector<T>::iterator::iterator(const T * aux){
 template<class T>
 Vector<T>::iterator::iterator(){
     x=0;
+}
+
+template<class T>
+bool Vector<T>::operator == (Vector<T>  v){
+    if(v.size()!=this->size())
+        return 0;
+    for(int i=0;i<v.size();i++)
+        if(v[i]!=vector[i])
+            return 0;
+    return 1;
+}
+
+template<class T>
+bool Vector<T>::operator = (Vector<T>  v){
+    delete []vector;
+    _size=v.size();
+    this->_capacity=v.capacity();
+    vector = new T[_capacity];
+    for(int i=0;i<_size;i++)
+        vector[i]=v[i];
+    return 1;
+}
+
+template<class T>
+bool Vector<T>::operator > (Vector<T> v){
+    if(v.size()<this->size())
+        return 1;
+    if(v.size()>this->size())
+        return 0;
+    for(int i=0;i<this->size();i++)
+        if(vector[i]>v[i])
+            return 1;
+        else
+            if(vector[i]<v[i])
+                return 0;
+    return 0;
+}
+
+template<class T>
+bool Vector<T>::operator < (Vector<T> v){
+    return (v>*this);
+}
+
+template<class T>
+bool Vector<T>::operator >= (Vector<T> v){
+    return (*this>v || *this==v);
+}
+
+template<class T>
+bool Vector<T>::operator <= (Vector<T> v){
+    return (*this<v || *this==v);
+}
+
+template<class T>
+void Vector<T>::erase (Vector<T>::iterator it){
+    erase((int) (it-begin()));
+}
+
+template<class T>
+Vector <T>::iterator::operator T*(){
+    return x;
+}
+template<class T>
+void Vector<T>::insert (Vector<T>::iterator it,T x){
+    insert((int)((T *)it-(T *)begin()),x);
 }

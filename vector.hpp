@@ -1,12 +1,12 @@
 #include "vector.h"
 #include <cstring>
 template<class T>
-int Vector<T>::size()
+int Vector<T>::size()const
 {
     return _size;
 }
 template<class T>
-int Vector<T>::capacity()
+int Vector<T>::capacity()const
 {
     return _capacity;
 }
@@ -47,8 +47,7 @@ void Vector<T>::reserve(int x)
     _capacity+=x;
     for(int i=0; i<_size; i++)
         aux[i]=vector[i];
-    if (vector != NULL)
-        delete [] vector;
+    delete[]vector;
     vector=aux;
 }
 template<class T>
@@ -287,7 +286,7 @@ bool Vector<T>::operator <= (Vector<T> v)
 }
 
 template<class T>
-void Vector<T>::erase (Vector<T>::iterator it)
+void Vector<T>::erase (const Vector<T>::iterator & it)
 {
     erase((int) (it-begin()));
 }
@@ -299,7 +298,7 @@ Vector <T>::iterator::operator T*()
 }
 
 template<class T>
-void Vector<T>::insert (Vector<T>::iterator it,T x)
+void Vector<T>::insert (const Vector<T>::iterator &it,T x)
 {
 
     insert((int)((T *)it-(T *)begin()),x);
@@ -378,4 +377,13 @@ bool Vector<T>::reverse_iterator::operator !=(const Vector<T>::reverse_iterator 
 template<class T>
 Vector<T>::reverse_iterator::reverse_iterator(){
 
+}
+
+template<class T>
+Vector<T>::Vector(const Vector<T> & v2){
+    _capacity=0;
+    _size=v2.size();
+    reserve(v2.capacity()+1);
+    for(int i=0;i<_size;i++)
+        vector[i]=v2.vector[i];
 }

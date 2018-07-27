@@ -11,17 +11,18 @@ private:
 public:
     class iterator;
     const bool container=true;
-    int size();///Returns the size of the vector
-    int capacity();///Returns the capacity of the vector
+    int size()const;///Returns the size of the vector
+    int capacity()const;///Returns the capacity of the vector
     Vector();///Basic construct
     Vector(int __capacity);///Constructor which specifies the initial size of the vector
+    Vector(const Vector<T>&);///Copy CTOR
     void push_back(T x);///Adds x to the end of the vector
     T &operator [](int x);///The x-th element of the vector
     void reserve(int x);///Reserves x more elemnts
     void insert(int pos,T x);///Inserts on pozition pos the element X
     void erase(int x);///Erases the x-th element of the vector
-    void erase (iterator it);
-    void insert (iterator,T);
+    void erase (const iterator &);
+    void insert (const iterator&,T);
     void pop_back();///Erases the last element of the vector
     void pop_front();///Erases the first element
     void clear();///Clears the vectors

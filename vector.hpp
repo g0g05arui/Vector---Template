@@ -405,12 +405,14 @@ void Vector<T>::shrink_to_fit(){
 
 template<class T>
 Vector<T>::Vector(T* begin,T* end){
-    for(;begin!=end;begin++)
-        this->push_back(*begin);
+    this->vector= new T [(int)(end-begin)+1];
+    this->_capacity=(int)(end-begin)+1;
+    for(this->_size=0;begin!=end;++begin,this->_size++)
+        this->vector[this->_size]=*begin;
 }
 
 template<class T>
 Vector<T>::Vector(std::initializer_list<T> il){
-    for(auto it=il.begin();it!=il.end();it++)
+    for(auto it=il.begin();it!=il.end();++it)
         this->push_back(*it);
 }

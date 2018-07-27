@@ -387,3 +387,30 @@ Vector<T>::Vector(const Vector<T> & v2){
     for(int i=0;i<_size;i++)
         vector[i]=v2.vector[i];
 }
+
+template<class T>
+T & Vector<T>::at(int x){
+    return this->operator[](x);
+}
+
+template<class T>
+void Vector<T>::shrink_to_fit(){
+    T * aux = new T[size()];
+    for(iterator it=begin();it!=end();it++)
+        aux[(int)(it-begin())]=*it;
+    delete[]this->vector;
+    this->vector=aux;
+    this->_capacity=this->_size;
+}
+
+template<class T>
+Vector<T>::Vector(T* begin,T* end){
+    for(;begin!=end;begin++)
+        this->push_back(*begin);
+}
+
+template<class T>
+Vector<T>::Vector(std::initializer_list<T> il){
+    for(auto it=il.begin();it!=il.end();it++)
+        this->push_back(*it);
+}

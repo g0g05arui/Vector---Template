@@ -16,8 +16,11 @@ public:
     Vector();///Basic construct
     Vector(int __capacity);///Constructor which specifies the initial size of the vector
     Vector(const Vector<T>&);///Copy CTOR
+    Vector(T*,T*);
+    Vector(std::initializer_list<T>);
     void push_back(T x);///Adds x to the end of the vector
     T &operator [](int x);///The x-th element of the vector
+    T & at(int);
     void reserve(int x);///Reserves x more elemnts
     void insert(int pos,T x);///Inserts on pozition pos the element X
     void erase(int x);///Erases the x-th element of the vector

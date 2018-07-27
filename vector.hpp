@@ -396,7 +396,7 @@ T & Vector<T>::at(int x){
 template<class T>
 void Vector<T>::shrink_to_fit(){
     T * aux = new T[size()];
-    for(iterator it=begin();it!=end();it++)
+    for(iterator it=begin();it!=end();++it)
         aux[(int)(it-begin())]=*it;
     delete[]this->vector;
     this->vector=aux;
@@ -413,6 +413,9 @@ Vector<T>::Vector(T* begin,T* end){
 
 template<class T>
 Vector<T>::Vector(std::initializer_list<T> il){
+    this->vector=new T[il.size()];
+    this->_capacity=il.size();
+    this->_size=0;
     for(auto it=il.begin();it!=il.end();++it)
-        this->push_back(*it);
+        this->vector[this->_size++]=*it;
 }

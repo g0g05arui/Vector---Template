@@ -35,7 +35,7 @@ public:
     Vector<T> operator % (int x);///Applies %=x;
     class iterator
     {
-    private:
+    protected:
         T *x;///Pointer to the current value
     public:
         const std::string TypeName=typeid(T*).name();///Name of the pointer's class
@@ -49,9 +49,31 @@ public:
         using Type=T;
         operator T*();
     };
+    ///Reverse_iterator CEND=BEGIN CBEGIN=END
+    class reverse_iterator
+    {
+    protected:
+        T*x;
+    public:
+        const std::string TypeName=typeid(T*).name();
+        T& operator *();
+        void operator ++();
+        void operator ++(int);
+        bool operator !=(const reverse_iterator &);
+        void operator=(const reverse_iterator &);
+        reverse_iterator(const T*);
+        reverse_iterator();
+        using Type=T;
+    };
     using Type=T;///TypeOfElements
     iterator begin();///First position
     iterator end();///Last position
+    const iterator cbegin();
+    const iterator cend();
+    reverse_iterator rbegin();
+    reverse_iterator rend();
+    const reverse_iterator crend();
+    const reverse_iterator crbegin();
     /// Operators
     bool operator ==(const Vector<T>);
     bool operator = (const Vector<T>);
@@ -59,6 +81,8 @@ public:
     bool operator < (const Vector<T>);
     bool operator >= (const Vector<T>);
     bool operator <= (const Vector<T>);
+    T* data();
+    void shrink_to_fit();
 };
 template <class T>
 void operator <<(std::ofstream & out,Vector<T> v);///Outputs the vector v to the ofstream out;

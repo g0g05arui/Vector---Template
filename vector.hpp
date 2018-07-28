@@ -38,7 +38,7 @@ T & Vector<T>::operator [](int x)
 {
     if(x<_capacity && x<_size)
         return vector[x];
-    return vector[0];
+    return vector[this->_size-1];
 }
 template<class T>
 void Vector<T>::reserve(int x)
@@ -51,11 +51,11 @@ void Vector<T>::reserve(int x)
     vector=aux;
 }
 template<class T>
-void Vector<T>::insert(int pos,T x)
+void Vector<T>::insert(int pos,T x)try
 {
-    if(_size==_capacity)
-        reserve(_capacity);
-    T *aux=new T[_size+1];
+    if(pos>=_capacity)
+        throw(1);
+    T *aux=new T[_capacity*2];
     for(int i=0; i<pos; i++)
         aux[i]=vector[i];
     aux[pos]=x;
@@ -64,11 +64,16 @@ void Vector<T>::insert(int pos,T x)
     delete []vector;
     vector=aux;
     _size++;
+    _capacity*=2;
+}catch(int error){
+    return ;
 }
 template<class T>
-void Vector<T>::erase(int x)
+void Vector<T>::erase(int x)try
 {
-    T *aux=new T[_size];
+    if(x<0 || x>capacity())
+        throw (1);
+    T *aux=new T[_capacity];
     for(int i=0; i<x; i++)
         aux[i]=vector[i];
     for(int i=x; i<_size-1; i++)
@@ -77,10 +82,13 @@ void Vector<T>::erase(int x)
     delete []vector;
     vector=aux;
 }
+catch(int error){
+    return;
+}
 template<class T>
 void Vector<T>::pop_back()
 {
-    _size--;
+    _size=std::max(0,_size-1);
 }
 template<class T>
 typename Vector<T>::iterator Vector<T>::begin()
@@ -418,4 +426,20 @@ Vector<T>::Vector(std::initializer_list<T> il){
     this->_size=0;
     for(auto it=il.begin();it!=il.end();++it)
         this->vector[this->_size++]=*it;
+}
+
+template<class T>
+Vector<T>::Vector(int num,T aux){
+    this->vector=new T[num];
+    this->_capacity=num;
+    this->_size=0;
+    for(int i=0;i<num;i++)
+        this->vector[_size++]=aux;
+}
+
+template<class T>
+Vector<T>::~Vector(){
+    delete[]this->vector;
+    _size=0;
+    _capacity=0;
 }

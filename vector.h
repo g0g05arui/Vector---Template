@@ -14,16 +14,18 @@ public:
     int size()const;///Returns the size of the vector
     int capacity()const;///Returns the capacity of the vector
     Vector();///Basic construct
-    Vector(int __capacity);///Constructor which specifies the initial size of the vector
+    Vector(int);///Constructor which specifies the initial size of the vector
     Vector(const Vector<T>&);///Copy CTOR
     Vector(T*,T*);
     Vector(std::initializer_list<T>);
+    Vector(int,T);
+    ~Vector();
     void push_back(T x);///Adds x to the end of the vector
     T &operator [](int x);///The x-th element of the vector
     T & at(int);
-    void reserve(int x);///Reserves x more elemnts
-    void insert(int pos,T x);///Inserts on pozition pos the element X
-    void erase(int x);///Erases the x-th element of the vector
+    void reserve(int);///Reserves x more elemnts
+    void insert(int,T);///Inserts on pozition pos the element X
+    void erase(int);///Erases the x-th element of the vector
     void erase (const iterator &);
     void insert (const iterator&,T);
     void pop_back();///Erases the last element of the vector
@@ -31,12 +33,12 @@ public:
     void clear();///Clears the vectors
     T &back();///Last element
     T &front();///First element
-    Vector<T> operator + (Vector<T> aux);///Returns the current elemnts with the elements of aux in the back
-    Vector<T> operator * (int x);///Applies *=x to all elements of a Vector;
-    Vector<T> operator - (int x);///Applies -=x;
-    Vector<T> operator + (int x);///Applies +=x;
-    Vector<T> operator / (int x);///Applies /=x;
-    Vector<T> operator % (int x);///Applies %=x;
+    Vector<T> operator + (Vector<T>);///Returns the current elemnts with the elements of aux in the back
+    Vector<T> operator * (int);///Applies *=x to all elements of a Vector;
+    Vector<T> operator - (int);///Applies -=x;
+    Vector<T> operator + (int);///Applies +=x;
+    Vector<T> operator / (int);///Applies /=x;
+    Vector<T> operator % (int);///Applies %=x;
     class iterator
     {
     protected:
@@ -87,6 +89,7 @@ public:
     bool operator <= (const Vector<T>);
     T* data();
     void shrink_to_fit();
+    std::string version="Final";
 };
 template <class T>
 void operator <<(std::ofstream & out,Vector<T> v);///Outputs the vector v to the ofstream out;

@@ -28,7 +28,12 @@ public:
     void insert(int,T);///Inserts on pozition pos the element X
     void erase(int);///Erases the x-th element of the vector
     void erase (const iterator &);
+    void erase (iterator,iterator);
     void insert (const iterator&,T);
+    void insert(const iterator&,int,const T&);
+    template<class InpIterator>void insert(const iterator&,const InpIterator&,const InpIterator&);
+    void insert(const iterator&,std::initializer_list<T>);
+    void insert(const iterator&,const Vector<T> &);
     void pop_back();///Erases the last element of the vector
     void pop_front();///Erases the first element
     void clear();///Clears the vectors
@@ -45,6 +50,7 @@ public:
     void assign(std::initializer_list<T>);
     void swap(Vector<T>&);
     void assign(int,const T & );
+    void emplace_back();
     template <class InpIterator>void assign(InpIterator,InpIterator);
     class iterator
     {
@@ -81,8 +87,8 @@ public:
     using Type=T;///TypeOfElements
     iterator begin();///First position
     iterator end();///Last position
-    const iterator cbegin();
-    const iterator cend();
+    const iterator cbegin()const;
+    const iterator cend()const;
     reverse_iterator rbegin();
     reverse_iterator rend();
     const reverse_iterator crend();

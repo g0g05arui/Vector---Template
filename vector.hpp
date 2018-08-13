@@ -333,7 +333,7 @@ void Vector<T>::reverse_iterator::operator++(int)
 }
 
 template<class T>
-const typename Vector<T>::iterator Vector<T>::cbegin()
+const typename Vector<T>::iterator Vector<T>::cbegin()const
 {
     return (iterator)
     {
@@ -342,9 +342,12 @@ const typename Vector<T>::iterator Vector<T>::cbegin()
 }
 
 template<class T>
-const typename Vector<T>::iterator Vector<T>::cend()
+const typename Vector<T>::iterator Vector<T>::cend()const
 {
-    return end();
+    return (iterator)
+    {
+        &vector[size()-1]+1
+    };
 }
 
 template<class T>
@@ -515,5 +518,87 @@ void Vector<T>::swap(Vector<T> & aux){
     aux._size=size_;
     this->_capacity=aux._capacity;
     aux._capacity=capacity_;
+}
 
+template<class T>
+void Vector<T>::erase ( Vector<T>::iterator S, Vector<T>::iterator F){
+    T * aux=new T[(int)((int)(S-this->begin()) + (int)(this->end() - F))];
+    std::cout<<S-this->begin()<<" "<<this->end()-F<<'\n';
+    _capacity=S-this->begin()+this->end()-F;
+    int size_=0;
+    std::cout<<_capacity<<'\n';
+    for(iterator it=this->begin();it!=S;it++)
+        aux[size_++]=*it;
+    for(auto it=F;it!=this->end();it++){
+        if((iterator)it==(iterator)F)
+            it++;
+        aux[size_++]=*it;
+    }
+    delete[]this->vector;
+    this->vector=aux;
+    _size=size_;
+}
+
+template<class T>
+void Vector<T>::insert(const iterator & poz , int num , const T & val){
+    T * aux = new int [this->_capacity+num];
+    this->_capacity+=num;
+    int size_=0;
+    for(auto it=this->begin();it!=poz;it++)
+        aux[size_++]=*it;
+    for(int i=0;i<num;i++)
+        aux[size_++]=val;
+    for(auto it=poz;it!=this->end();it++)
+        aux[size_++]=*it;
+    delete[]this->vector;
+    this->vector=aux;
+    _size=size_;
+}
+
+template<class T>
+template<class InpIterator>void Vector<T>::insert(const iterator & poz , const InpIterator & S , const InpIterator & F){
+    T * aux = new int [this->_capacity+(int)((InpIterator)F-(InpIterator)S)];
+    this->_capacity+=(int)(int)((InpIterator)F-(InpIterator)S);
+    int size_=0;
+    for(auto it=this->begin();it!=poz;it++)
+        aux[size_++]=*it;
+    for(auto it=S;it!=F;it++)
+        aux[size_++]=*it;
+    for(auto it=poz;it!=this->end();it++)
+        aux[size_++]=*it;
+    delete[]this->vector;
+    this->vector=aux;
+    _size=size_;
+}
+
+template<class T>
+void Vector<T>::insert(const iterator & poz , std::initializer_list<T> il ){
+    T * aux = new int [this->_capacity+il.size()];
+    this->_capacity+=il.size();
+    int size_=0;
+    for(auto it=this->begin();it!=poz;it++)
+        aux[size_++]=*it;
+    for(auto it=il.begin();it!=il.end();it++)
+        aux[size_++]=*it;
+    for(auto it=poz;it!=this->end();it++)
+        aux[size_++]=*it;
+    delete[]this->vector;
+    this->vector=aux;
+    _size=size_;
+}
+
+template<class T>
+void Vector<T>::insert(const iterator & poz ,const Vector<T> &V){
+    T * aux = new int [this->_capacity+V.size()];
+    this->_capacity+=V.size();
+    int size_=0;
+    for(auto it=this->begin();it!=poz;it++)
+        aux[size_++]=*it;
+    for(auto it=V.cbegin();it!=V.cend();it++)
+        aux[size_++]=*it;
+    for(auto it=poz;it!=this->end();it++)
+        aux[size_++]=*it;
+    delete[]this->vector;
+    this->vector=aux;
+    _size=size_;
 }

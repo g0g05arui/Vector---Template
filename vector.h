@@ -9,6 +9,7 @@ private:
     T *vector;///Vector
     int _size,_capacity;///Current size and capacity
 public:
+    std::string name_()const;
     class iterator;
     const bool container=true;
     int size()const;///Returns the size of the vector
@@ -33,12 +34,18 @@ public:
     void clear();///Clears the vectors
     T &back();///Last element
     T &front();///First element
+    void resize(int);
+    void resize(int,T);
     Vector<T> operator + (Vector<T>);///Returns the current elemnts with the elements of aux in the back
     Vector<T> operator * (int);///Applies *=x to all elements of a Vector;
     Vector<T> operator - (int);///Applies -=x;
     Vector<T> operator + (int);///Applies +=x;
     Vector<T> operator / (int);///Applies /=x;
     Vector<T> operator % (int);///Applies %=x;
+    void assign(std::initializer_list<T>);
+    void swap(Vector<T>&);
+    void assign(int,const T & );
+    template <class InpIterator>void assign(InpIterator,InpIterator);
     class iterator
     {
     protected:
@@ -83,6 +90,7 @@ public:
     /// Operators
     bool operator ==(const Vector<T>);
     bool operator = (const Vector<T>);
+    bool operator = (std::initializer_list<T>);
     bool operator > (const Vector<T>);
     bool operator < (const Vector<T>);
     bool operator >= (const Vector<T>);

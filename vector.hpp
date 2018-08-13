@@ -1,5 +1,7 @@
 #include "vector.h"
 #include <cstring>
+#include <string>
+#include <typeinfo>
 template<class T>
 int Vector<T>::size()const
 {
@@ -442,4 +444,76 @@ Vector<T>::~Vector(){
     delete[]this->vector;
     _size=0;
     _capacity=0;
+}
+
+template<class T>
+std::string Vector<T>::name_()const{
+    std::string name="Vector";
+    name+=" ";
+    name+=typeid(T()).name();
+    return name;
+}
+
+template<class T>
+void Vector<T>::resize(int size){
+    if(size<=this->_size){
+        this->_size=size;
+        return ;
+    }
+    for(int i=_size;i<size;i++)
+        this->push_back(T());
+}
+
+template<class T>
+void Vector<T>::resize(int size,T val){
+    if(size<=this->_size){
+        this->_size=size;
+        return ;
+    }
+    for(int i=_size;i<size;i++)
+        this->push_back(val);
+}
+
+template<class T>
+void Vector<T>::assign(std::initializer_list<T>il){
+    this->clear();
+    this->vector=new T[il.size()];
+    this->_capacity=il.size();
+    for(auto it=il.begin();it!=il.end();it++)
+        this->vector[_size++]=*it;
+}
+
+template<class T>
+void Vector<T>::assign(int size,const T & val){
+    this->clear();
+    this->vector=new T[size];
+    this->_capacity=size;
+    for(int i=0;i<size;i++)
+        this->vector[_size++]=val;
+}
+
+template<class T>
+template<class InpIterator>void Vector<T>::assign(InpIterator a,InpIterator b){
+    this->clear();
+    for(InpIterator c=a;c!=b;c++)
+        this->push_back(*c);
+}
+
+template<class T>
+bool Vector<T>::operator = (std::initializer_list<T> il){
+    this->assign(il);
+    return 1;
+}
+
+template<class T>
+void Vector<T>::swap(Vector<T> & aux){
+    T * ap=this->vector;
+    int size_=this->_size,capacity_=this->_capacity;
+    this->vector=aux.vector;
+    aux.vector=ap;
+    this->_size=aux._size;
+    aux._size=size_;
+    this->_capacity=aux._capacity;
+    aux._capacity=capacity_;
+
 }
